@@ -18,20 +18,25 @@ services:
       - 5672
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DATABASE: postgres
+    ports:
+      - 5432
+    volumes:
+      - postgresdb_data:/var/lib/postgresql/data
   nginx:
     image: nginx:alpine
     ports:
       - 80:80
+      - 443:443
       - 5672:5672
       - 15672:15672
       - 27017:27017
       - 5432:5432
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-  postgres:
-    image: postgres
-    ports:
-      - 5432
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
 volumes:
@@ -41,5 +46,8 @@ volumes:
   mongodb_data:
     external: true
     name: dev_stack_mongodb_data
+  postgresdb_data:
+    external: true
+    name: dev_stack_postgresdb_data
 
-# docker volume create --driver local --opt type=tmpfs --opt device=tmpfs --opt o=size=500m,uid=1000 dev_stack_rabbitmq_data
+# docker volume create --driver local --opt type=tmpfs --opt device=tmpfs --opt o=size=500m,uid=1000 dev_stack_postgresdb_data
