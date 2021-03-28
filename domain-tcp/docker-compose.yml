@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.7'
 services:
   mongodb:
     image: mongo:latest
@@ -45,5 +45,4 @@ volumes:
   postgresdb_data:
     external: true
     name: dev_stack_postgresdb_data
-
 # docker volume create --driver local --opt type=tmpfs --opt device=tmpfs --opt o=size=500m,uid=1000 dev_stack_postgresdb_data
